@@ -1,0 +1,4 @@
+---
+# defaults file for bootstrap role
+# For Python 3, use python3-pip.
+pip_package: python3-pip

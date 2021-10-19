@@ -1,0 +1,8 @@
+---
+# tasks file for docker
+# docker-compose:
+- name: test docker-compose
+  docker_compose:
+    project_name: arja-stack
+    project_src: ./roles/docker/compose/
+    state: present # Specifying present is the same as running docker-compose up

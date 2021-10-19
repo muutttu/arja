@@ -1,0 +1,66 @@
+---
+# tasks file for bootstrap
+- name: Ensure Pip is installed.
+  package:
+    name: "python3-pip"
+    state: present
+
+# APT update process:
+- name: Update apt repo and cache on all Debian/Ubuntu boxes
+  become: yes # Apply shell command as 'root'
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Upgrade all packages on servers
+  become: yes # Apply shell command as 'root'
+  apt: upgrade=dist force_apt_get=yes
+
+- name: Check if a reboot is needed on all servers
+  become: yes # Apply shell command as 'root'
+  register: reboot_required_file
+  stat: path=/var/run/reboot-required get_md5=no
+
+- name: Reboot the box if kernel updated
+  become: yes # Apply shell command as 'root'
+  reboot:
+    msg: "Reboot initiated by Ansible for kernel updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists
+
+# Install common prerequisites
+# --
+- name: Install prerequisites
+  become: yes # Apply shell command as 'root'
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+  tags: bootstrap
+
+# Installs Python package manager
+# --
+#
+- name: Install python package manager
+  become: yes # Apply shell command as 'root'
+  apt:
+    name: python3-pip
+  tags: bootstrap
+
+# Installs Docker SDK
+# --
+#
+- name: Install python Docker SDK
+  pip:
+    name:
+      - docker
+      - docker-compose
+  tags: bootstrap
