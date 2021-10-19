@@ -2,9 +2,7 @@
 ---
 - name: "Deploy ARJA comms stack"
   hosts: locals
-#  vars_files:
-#    - vars/default.yml
   connection: local
   roles:
-#    - bootstrap
+    - bootstrap
     - docker
