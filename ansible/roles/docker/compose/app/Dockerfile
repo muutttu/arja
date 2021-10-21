@@ -15,10 +15,10 @@ EXPOSE 5000/tcp
 WORKDIR /app
 
 # Copy the App files to the current working directory
-COPY requirements.txt \
-    __init.py__ \
-    app.py \
-    wsgi.py \
+COPY ./files/requirements.txt \
+    ./files/__init.py__ \
+    ./files/app.py \
+    ./files/wsgi.py \
     ./
 # Copy templates-folder to app-folder
 ADD templates /app/templates
