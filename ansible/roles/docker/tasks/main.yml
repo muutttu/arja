@@ -1,7 +1,7 @@
 ---
 # tasks file for docker
 # docker-compose:
-- name: test docker-compose
+- name: Run docker-compose for ARJA-stack
   docker_compose:
     project_name: arja-stack
     project_src: ./roles/docker/compose/

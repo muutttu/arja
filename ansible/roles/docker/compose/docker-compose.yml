@@ -27,5 +27,17 @@ services:
     links:
       - app:app
 
+  ejabberd:
+    container_name: ejabberd
+    build:
+      context: ./ejabberd
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - './ejabberd/templates/ejabberd.yml:/home/ejabberd/conf/ejabberd.yml'
+    ports:
+      - 5222:5222
+      - 5280:5280
+
 networks:
   arjanet:
