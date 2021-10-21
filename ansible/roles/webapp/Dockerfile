@@ -15,10 +15,10 @@ EXPOSE 5000/tcp
 WORKDIR /app
 
 # Copy the App files to the current working directory
-COPY requirements.txt \
-    __init.py__ \
-    app.py \
-    wsgi.py \
+COPY ./app/requirements.txt \
+    ./app/__init.py__ \
+    ./app/app.py \
+    ./app/wsgi.py \
     ./
 
 # Install any dependencies

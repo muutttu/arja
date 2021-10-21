@@ -6,3 +6,4 @@
   roles:
     - bootstrap
     - docker
+    - ejabberd
