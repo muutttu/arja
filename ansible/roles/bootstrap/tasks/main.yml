@@ -2,20 +2,17 @@
 # tasks file for bootstrapping the Docker host
 
 # Host system preparation and update process:
-- name: Update apt repo and cache on all Debian/Ubuntu boxes
+- name: Update apt repository cache
   become: true # Apply shell command as 'root'
   apt:
     update_cache: true
-    force_apt_get: true
-    cache_valid_time: 3600
-  tags: bootstrap
+    cache_valid_time: 3600 # 1 hour
 
-- name: Upgrade all packages on servers
+- name: Update all packages to the latest version
   become: true # Apply shell command as 'root'
   apt:
     upgrade: dist
     force_apt_get: true
-  tags: bootstrap
 
 - name: Check if a reboot is needed on all servers
   become: true # Apply shell command as 'root'
@@ -23,7 +20,6 @@
   stat:
     path: /var/run/reboot-required
     get_md5: false
-  tags: bootstrap
 
 - name: Reboot the box if kernel updated
   become: true # Apply shell command as 'root'
@@ -35,23 +31,21 @@
     post_reboot_delay: 30
     test_command: uptime
   when: reboot_required_file.stat.exists
-  tags: bootstrap
 
 # Install common prerequisites
 # --
-- name: Install prerequisites
+- name: Install common utility packages
   become: true # Apply shell command as 'root'
   apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: true
-  with_items:
+    name:
     - apt-transport-https
     - ca-certificates
     - curl
     - gnupg-agent # AP: check if this is needed.
     - software-properties-common
-  tags: bootstrap
+    state: present
+    update_cache: true
+    autoclean: true
 
 # Installs Python package manager
 # --
@@ -61,7 +55,6 @@
   apt:
     name: python3-pip
     state: present
-  tags: bootstrap
 
 # Installs Docker SDK
 # --
@@ -72,4 +65,3 @@
       - docker
       - docker-compose
     state: present
-  tags: bootstrap
