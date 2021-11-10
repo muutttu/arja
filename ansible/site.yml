@@ -4,5 +4,5 @@
   hosts: locals
   connection: local
   roles:
-    - bootstrap
-    - docker
+    - bootstrap # Prepare the host system
+    - docker # Prepare docker host and run docker-compose

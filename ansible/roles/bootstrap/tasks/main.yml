@@ -1,7 +1,15 @@
 ---
-# tasks file for bootstrapping the Docker host
+# tasks file for bootstrapping the Docker host (tested on Ubuntu 20.04)
 
 # Host system preparation and update process:
+# --
+- name: Install aptitude using apt
+  become: true # Apply shell command as 'root'
+  apt:
+    state: latest
+    update_cache: true
+    force_apt_get: true
+
 - name: Update apt repository cache
   become: true # Apply shell command as 'root'
   apt:
@@ -32,6 +40,12 @@
     test_command: uptime
   when: reboot_required_file.stat.exists
 
+- name: Remove unwanted packages
+  become: true # Apply shell command as 'root'
+  apt:
+    autoremove: yes # removes any packages on the system that are no longer needed
+    purge: yes # removes all of the configuration files of uninstalled packages
+
 # Install common prerequisites
 # --
 - name: Install common utility packages
@@ -41,7 +55,7 @@
     - apt-transport-https
     - ca-certificates
     - curl
-    - gnupg-agent # AP: check if this is needed.
+    - gnupg-agent # AP: check if this is needed or gnupg2
     - software-properties-common
     state: present
     update_cache: true
@@ -49,19 +63,16 @@
 
 # Installs Python package manager
 # --
-#
-- name: Install python package manager
+- name: Install Python3 package manager PIP
   become: yes # Apply shell command as 'root'
   apt:
     name: python3-pip
     state: present
 
-# Installs Docker SDK
+# Remove the potential build-in APT installed version of Docker
 # --
-#
-- name: Install python Docker SDK library
-  pip:
-    name:
-      - docker
-      - docker-compose
-    state: present
+- name: Remove potential pre-installed Docker from APT
+  become: yes # Apply shell command as 'root'
+  apt:
+    name: docker
+    state: absent
