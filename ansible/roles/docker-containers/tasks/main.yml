@@ -1,19 +1,6 @@
 ---
-# tasks file for docker host system
-
-# Installs Docker SDK
-# --
+## Install containers with docker-compose
 #
-- name: Install python Docker SDK library
-  pip:
-    name:
-      - docker
-      - docker-compose
-    state: present
-
-
-
-# docker-compose:
 - name: Run docker-compose for ARJA-stack
   docker_compose:
     project_name: arja-stack

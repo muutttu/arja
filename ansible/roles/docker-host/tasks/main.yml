@@ -1,0 +1,12 @@
+---
+# tasks file for docker host system
+
+# Installs Docker SDK
+# --
+#
+- name: Install python Docker SDK library
+  pip:
+    name:
+      - docker
+      - docker-compose
+    state: present
