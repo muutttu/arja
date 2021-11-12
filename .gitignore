@@ -162,3 +162,5 @@ dmypy.json
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode
+ansible/roles/docker-containers/compose/portainer/templates/portainer.db
+ansible/roles/docker-containers/compose/portainer/templates/docker_config/config.json
