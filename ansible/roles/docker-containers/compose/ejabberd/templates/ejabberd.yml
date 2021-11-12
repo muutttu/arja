@@ -26,7 +26,7 @@ log_rate_limit: 100
 certfiles:
   - /home/ejabberd/conf/server.pem
 
-ca_file: "/home/ejabberd/conf/cacert.pem"
+#ca_file: "/home/ejabberd/conf/cacert.pem" #Path to a file of CA root certificates
 
 ## When using let's encrypt to generate certificates
 ##certfiles:

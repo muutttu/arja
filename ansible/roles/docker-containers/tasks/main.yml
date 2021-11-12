@@ -2,7 +2,9 @@
 ## Install containers with docker-compose
 #
 - name: Run docker-compose for ARJA-stack
-  docker_compose:
+  community.docker.docker_compose:
     project_name: arja-stack
-    project_src: ./roles/docker/compose/
+    project_src: ./roles/docker-containers/compose
+    files:
+      - docker-compose.yml
     state: present # Specifying present is the same as running docker-compose up

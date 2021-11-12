@@ -6,6 +6,6 @@ FROM ejabberd/ecs:latest
 LABEL version="0.0.1-beta"
 LABEL author="muutttu@live.fi"
 
-#ADD ./templates/ejabberd.yml.tpl /opt/ejabberd/conf/ejabberd.yml.tpl
-#ADD ./templates/ejabberdctl.cfg.tpl /opt/ejabberd/conf/ejabberdctl.cfg.tpl
-#ADD ./templates/example.com.pem /opt/ejabberd/ssl/example.com.pem
+ADD ./templates/ejabberd.yml.tpl /opt/ejabberd/conf/ejabberd.yml.tpl
+ADD ./templates/ejabberdctl.cfg.tpl /opt/ejabberd/conf/ejabberdctl.cfg.tpl
+ADD ./templates/example.com.pem /opt/ejabberd/ssl/example.com.pem

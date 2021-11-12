@@ -1,43 +1,55 @@
-version: "3"
+version: "3.9"
 
 services:
   app:
     container_name: flask-app
     build:
-      context: ./app
+      context: ./app # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
     restart: always
-#    expose:
-#      - "5000"
-#    volumes:
-#      - app-data:/usr/src/app/static
-#    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    expose:
+      - "5000"
+    volumes:
+      - "./app/templates:/usr/src/app/static"
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app # Override the default command
 
   nginx:
     container_name: nginx
     build:
-      context: ./nginx
+      context: ./nginx # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
     restart: always
     ports:
       - "8080:80"
-#    volumes:
-#      - .:/www/static
-#      - app-data:/usr/src/app/static
+    volumes:
+      - "./nginx/files:/www/static"
+      - "./nginx/templates:/usr/src/app/static"
     links:
-      - app:app
+      - "app:app" # Link to containers in another service
 
   ejabberd:
     container_name: ejabberd
     build:
-      context: ./ejabberd
+      context: ./ejabberd # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - './ejabberd/templates/ejabberd.yml:/home/ejabberd/conf/ejabberd.yml'
+      - "./ejabberd/templates:/home/ejabberd/conf"
     ports:
-      - 5222:5222
-      - 5280:5280
+      - "5222:5222"
+      - "5280:5280"
+
+  portainer:
+    container_name: portainer
+    build:
+      context: ./portainer # path to a directory containing a Dockerfile
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - "./portainer/templates:/data"
 
 networks:
   arjanet:

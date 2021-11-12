@@ -3,10 +3,18 @@
 
 # Installs Docker SDK
 # --
-#
+# Installing Docker SDK by from PIP
 - name: Install python Docker SDK library
   pip:
     name:
       - docker
       - docker-compose
     state: present
+
+# Create docker group
+#- name: create docker group
+#  command: sudo groupadd docker
+
+# Add your user to the docker group
+#- name: add user mod
+#  command: sudo usermod -aG docker $USER
