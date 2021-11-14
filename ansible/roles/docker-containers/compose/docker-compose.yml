@@ -68,12 +68,15 @@ services:
     build:
       context: ./portainer # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
+    networks:
+      - frontend
     restart: always
     ports:
       - "8000:8000"
       - "9000:9000"
     volumes:
-      - "./portainer/templates:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock" # Access to host system Docker-socket
+      - "portainer_data:/data"
 
 # Persistent data to be configured in volumes from Docker host system /var/lib/docker/volumes
 volumes: # Named volumes inside /var/lib/docker/volume local docker host directory.
