@@ -22,17 +22,22 @@ services:
 
   nginx:
     container_name: nginx
+    depends_on:
+      - app
     build:
       context: ./nginx # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
+    networks:
+      - frontend
     restart: always
     ports:
       - "8080:80"
+      #- "443:443" # HTTPS reservation
     volumes:
-      - "./nginx/files:/www/static"
-      - "./nginx/templates:/usr/src/app/static"
-    links:
-      - "app:app" # Link to containers in another service
+      - "app_static_files:/var/www/static"
+      - "app_media_files:/var/www/media"
+      - "nginx_data:/var/www"
+      - "certbot_data:/etc/nginx/certs:ro"
 
   ejabberd:
     container_name: ejabberd
