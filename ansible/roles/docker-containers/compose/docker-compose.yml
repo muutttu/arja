@@ -53,6 +53,22 @@ services:
       - "nginx_data:/var/www"
       - "certbot_data:/etc/nginx/certs:ro"
 
+certbot:
+    container_name: certbot
+    depends_on:
+      - nginx
+    build:
+      context: ./certbot
+      dockerfile: Dockerfile
+    networks:
+      - frontend
+    restart: "no"
+    #ports:
+    volumes:
+      - "nginx_data:/var/www/certbot:rw"
+      - "certbot_data:/etc/letsencrypt:rw"
+    command: certonly -d ${DEFAULT_DOMAIN} -d ${WWW_DOMAIN} -d ${CHAT_DOMAIN} -m ${DEFAULT_EMAIL} --agree-tos --standalone --dry-run
+
   ejabberd:
     container_name: ejabberd
     build:
