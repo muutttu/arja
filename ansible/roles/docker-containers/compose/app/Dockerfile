@@ -8,9 +8,6 @@ LABEL author="muutttu@live.fi"
 # Set environment variables in the container
 ENV LANG C.UTF-8
 
-# Set container to listen on port 5000 (Flask) inside docker
-EXPOSE 5000/tcp
-
 # Creates and sets the working directory in the container for further commands
 WORKDIR /app
 

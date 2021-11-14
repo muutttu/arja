@@ -3,15 +3,22 @@ version: "3.9"
 services:
   app:
     container_name: flask-app
+    depends_on:
+      - db_app
     build:
       context: ./app # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
+    networks:
+      - frontend
+      - backend
     restart: always
     expose:
       - "5000"
     volumes:
-      - "./app/templates:/usr/src/app/static"
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app # Override the default command
+      - "app_static_files:/var/www/static"
+      - "app_media_files:/var/www/media"
+    links: # Links allow you to define extra aliases by which a service is reachable from another service.
+      - "db_app:database" # Link to containers in another service, here db_app and database
 
   nginx:
     container_name: nginx
@@ -51,5 +58,18 @@ services:
     volumes:
       - "./portainer/templates:/data"
 
+# Persistent data to be configured in volumes from Docker host system /var/lib/docker/volumes
+volumes: # Named volumes inside /var/lib/docker/volume local docker host directory.
+  app_static_files:
+  app_media_files:
+  database_data:
+  nginx_data:
+  certbot_data:
+  ejabberd_data:
+  portainer_data:
+
 networks:
-  arjanet:
+  frontend: # Reservation for frontend-network
+    name: arja_frontend_network
+  backend: # Reservation for backend-network
+    name: arja_backend_network
