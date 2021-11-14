@@ -39,12 +39,24 @@ services:
     build:
       context: ./ejabberd # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
+    networks:
+      - frontend
     restart: always
     volumes:
-      - "./ejabberd/templates:/home/ejabberd/conf"
+      - "ejabberd_data:/home/ejabberd/conf" # Directory containing configuration and certificates
+      - "ejabberd_data:/home/ejabberd/backup"
+      - "ejabberd_data:/home/ejabberd/upload" # Directory containing uploaded files | TODO: backup
+      - "ejabberd_data:/home/ejabberd/database" # Directory containing Mnesia database | TODO: backup
+      - "ejabberd_data:/home/ejabberd/logs" # Directory containing log files
     ports:
       - "5222:5222"
       - "5280:5280"
+    environment:
+      - CTL_ON_CREATE=register admin localhost password ;
+                      check_password admin localhost password
+      - CTL_ON_START=registered_vhosts ;
+                     stats registeredusers ;
+                     status
 
   portainer:
     container_name: portainer
