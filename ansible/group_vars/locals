@@ -1,0 +1,3 @@
+---
+# locals-group specific variables
+nginx_server_name: localhost
