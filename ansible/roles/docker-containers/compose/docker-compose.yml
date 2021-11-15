@@ -50,8 +50,8 @@ services:
     volumes:
       - "app_static_files:/var/www/static"
       - "app_media_files:/var/www/media"
-      - "nginx_data:/var/www"
-      - "certbot_data:/etc/nginx/certs:ro"
+      - "nginx_data:/var/www/certbot" # Webroot folder for certbot
+      - "certbot_data:/etc/nginx/certs:ro" # certbot ssl cert folder
 
 certbot:
     container_name: certbot
@@ -65,9 +65,9 @@ certbot:
     restart: "no"
     #ports:
     volumes:
-      - "nginx_data:/var/www/certbot:rw"
-      - "certbot_data:/etc/letsencrypt:rw"
-    command: certonly -d ${DEFAULT_DOMAIN} -d ${WWW_DOMAIN} -d ${CHAT_DOMAIN} -m ${DEFAULT_EMAIL} --agree-tos --standalone --dry-run
+      - "nginx_data:/usr/share/nginx/html/letsencrypt" # Webroot folder for certbot, Nginx /var/www/certbot
+      - "certbot_data:/etc/letsencrypt/live" # certificate and chain (fullchain.pem) + key file (privkey.pem) stored here
+    command: certonly --webroot --agree-tos --email ${DEFAULT_EMAIL} -d ${DEFAULT_DOMAIN} -d ${WWW_DOMAIN} -d ${CHAT_DOMAIN} -w /usr/share/nginx/html/letsencrypt --dry-run
 
   ejabberd:
     container_name: ejabberd

@@ -11,3 +11,7 @@ RUN cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 RUN rm /etc/nginx/conf.d/default.conf
 # copying own config to nginx container
 COPY ./templates/nginx.conf.j2 /etc/nginx/nginx.conf
+# copy http-server block to nginx container
+COPY ./templates/http-server.conf.j2 /etc/nginx/conf.d/http-server.conf
+# copy the https/ssl -server block to nginx container
+#COPY ./templates/ssl-server.conf.j2 /etc/nginx/conf.d/ssl-server.conf
