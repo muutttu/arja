@@ -5,6 +5,7 @@
   community.docker.docker_compose:
     project_name: arja-stack
     project_src: ./roles/docker-containers/compose
+    env_file: .env
     files:
       - docker-compose.yml
     state: present # Specifying present is the same as running docker-compose up

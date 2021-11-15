@@ -7,10 +7,11 @@ upstream flask {
         
         listen 80;
 
-        root        /usr/share/nginx/html;
+        root        /var/www/domain;
         index       index.html;
 
-        server_name localhost 127.0.0.1;
+        #server_name localhost 127.0.0.1;
+        server_name {{ public_domain_name }} www.{{ public_domain_name }} chat.{{ public_domain_name }};
 
         charset     utf-8;
 
@@ -19,12 +20,16 @@ upstream flask {
 
         error_page  500 502 503 504  /50x.html;
 
-        location / {
-            index index.html;
-        }
+        error_log /var/log/nginx/{{ public_domain_name }}_error.log;
+        access_log /var/log/nginx/{{ public_domain_name }}_access.log;
+
         location /.well-known/acme-challenge/ {
             allow all;
             root /var/www/certbot; # webroot for certbot
+        }
+
+        location / {
+            root /usr/share/nginx/html;
         }
 
         # TODO: change, when SSL configured

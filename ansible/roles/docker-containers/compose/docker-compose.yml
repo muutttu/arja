@@ -3,7 +3,6 @@ version: "3.9"
 services:
   db_app:
     container_name: database-app
-    #env_file: ./database/.env
     build:
       context: ./database # path to a directory containing a Dockerfile
       dockerfile: Dockerfile
@@ -45,8 +44,8 @@ services:
       - frontend
     restart: always
     ports:
-      - "8080:80"
-      #- "443:443" # HTTPS reservation
+      - "80:80"
+      - "443:443"
     volumes:
       - "app_static_files:/var/www/static"
       - "app_media_files:/var/www/media"
@@ -63,7 +62,6 @@ certbot:
     networks:
       - frontend
     restart: "no"
-    #ports:
     volumes:
       - "nginx_data:/usr/share/nginx/html/letsencrypt" # Webroot folder for certbot, Nginx /var/www/certbot
       - "certbot_data:/etc/letsencrypt/live" # certificate and chain (fullchain.pem) + key file (privkey.pem) stored here
