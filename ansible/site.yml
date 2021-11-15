@@ -1,8 +1,10 @@
 # main.yml
 ---
 - name: "Deploy ARJA comms stack"
-  hosts: locals
-  connection: local
+  hosts:
+    - locals
+    #- ubuntu
+  #connection: local
   roles:
     - bootstrap # Prepare the host system
     - docker-host # Prepare docker host
