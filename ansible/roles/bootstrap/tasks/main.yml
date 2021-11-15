@@ -70,9 +70,18 @@
     state: present
 
 # Remove the potential build-in APT installed version of Docker
-# --
+# -- APT
 - name: Remove potential pre-installed Docker from APT
   become: yes # Apply shell command as 'root'
   apt:
     name: docker
+    state: absent
+
+# -- PIP3
+- name: Remove potential pre-installed Docker from PIP
+  pip:
+    name:
+     - docker
+     - docker-py
+     - docker-compose
     state: absent
