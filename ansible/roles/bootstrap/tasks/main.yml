@@ -74,7 +74,11 @@
 - name: Remove potential pre-installed Docker from APT
   become: yes # Apply shell command as 'root'
   apt:
-    name: docker
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
     state: absent
 
 # -- PIP3

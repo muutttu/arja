@@ -2,8 +2,8 @@
 ---
 - name: "Deploy ARJA comms stack"
   hosts:
-    - locals
-    #- ubuntu
+    #- locals
+    - ubuntu20
   #connection: local
   roles:
     - bootstrap # Prepare the host system

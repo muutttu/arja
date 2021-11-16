@@ -5,6 +5,11 @@
   community.docker.docker_compose:
     project_name: arja-stack
     project_src: ./roles/docker-containers/compose # TODO - EI TOIMI
+    docker_host: "tcp://{{ remote_host_ip }}:2375"
     files:
       - docker-compose.yml
     state: present # Specifying present is the same as running docker-compose up
+  delegate_to: localhost
+  vars:
+    - ansible_ssh_user: "lokaalikayttaja" # TODO tämä variablesta
+    - ansible_ssh_password: "kayttajansalasana" # TODO tämä muutetaan
