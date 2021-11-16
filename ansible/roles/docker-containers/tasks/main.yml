@@ -1,15 +1,13 @@
 ---
 ## Install containers with docker-compose
 #
-- name: Run docker-compose for ARJA-stack
+- name: Run docker-compose up and install containers
   community.docker.docker_compose:
     project_name: arja-stack
-    project_src: ./roles/docker-containers/compose # TODO - EI TOIMI
-    docker_host: "tcp://{{ remote_host_ip }}:2375"
+    project_src: ./roles/docker-containers/compose
+    env_file: .env
+    docker_host: "tcp://13.51.109.237:2375"
     files:
       - docker-compose.yml
     state: present # Specifying present is the same as running docker-compose up
-  delegate_to: localhost
-  vars:
-    - ansible_ssh_user: "lokaalikayttaja" # TODO tämä variablesta
-    - ansible_ssh_password: "kayttajansalasana" # TODO tämä muutetaan
+  #delegate_to: localhost

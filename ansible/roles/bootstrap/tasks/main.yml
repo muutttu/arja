@@ -57,6 +57,7 @@
     - curl
     - gnupg-agent # AP: check if this is needed or gnupg2
     - software-properties-common
+    - python-is-python3
     state: present
     update_cache: true
     autoclean: true
@@ -83,6 +84,7 @@
 
 # -- PIP3
 - name: Remove potential pre-installed Docker from PIP
+  become: true
   pip:
     name:
      - docker
