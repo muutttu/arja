@@ -6,7 +6,7 @@
 - name: Install aptitude using apt
   become: true # Apply shell command as 'root'
   apt:
-    state: latest
+    name: aptitude
     update_cache: true
     force_apt_get: true
 
