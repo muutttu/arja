@@ -23,6 +23,8 @@ media
 *.sql
 *.sqlite
 *.sqlite3
+# Key files
+*.key
 
 ### Ansible ###
 
