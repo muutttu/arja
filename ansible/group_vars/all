@@ -1,2 +1,3 @@
 ---
 # these are the site wide default variables
+ansible_python_interpreter: "/usr/bin/python3"

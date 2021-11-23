@@ -1,11 +1,14 @@
 # main.yml
 ---
-- name: "Deploy ARJA comms stack"
-  hosts:
-    #- locals
-    - ubuntu20
-  #connection: local
-  roles:
-    - bootstrap # Prepare the host system
-    - docker-host # Prepare docker host
-    - docker-containers # Install Docker container services
+# master playbook for the project
+## Connectivity testing play:
+- name: Connectivity tests
+  import_playbook: testssh.yml
+
+## Bootstrapping with package and library update
+- name: Bootstrapping
+  import_playbook: bootstrap.yml
+
+## Deploy Docker container stack
+- name: Docker services
+  import_playbook: docker.yml

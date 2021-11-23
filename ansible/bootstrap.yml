@@ -1,0 +1,14 @@
+---
+## Update APT, cache, install prerequisites etc, as root/sudo
+- name: Set Ubuntu 20.04 server base configuration
+  hosts:
+    - s7home
+  become: true  # All shell commands as 'root'
+  tasks:
+    - import_role:
+        name: bootstrap_ubuntu # Prepare the Ubuntu servers
+      tags: bootstrap
+    #- import_role: # Reservation for other roles
+    #    name: something_else
+    #  vars: # Potential variables for this roles
+    #    rolevar1: value from task

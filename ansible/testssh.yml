@@ -1,0 +1,6 @@
+---
+- name: Verify Connectivity to all hosts
+  hosts: all
+  tasks:
+    - action: ping
+  
