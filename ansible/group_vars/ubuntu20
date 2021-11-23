@@ -1,3 +1,0 @@
----
-# ubuntu-group specific variables
-docker_compose_version: "1.29.2"
