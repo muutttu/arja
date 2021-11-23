@@ -1,0 +1,11 @@
+## contains the main list of tasks to be executed by the role.
+---
+# main tasks for bootstrapping Ubuntu 20.04 servers
+
+# Host system preparation and update process:
+# --
+- name: Install aptitude and update APT cache
+  include_tasks: apt.yml
+
+- name: Install required system packages
+  include_tasks: packages.yml
