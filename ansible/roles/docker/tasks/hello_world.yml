@@ -1,0 +1,29 @@
+## Tämä sisältää testitaskeja
+---
+#- name: Docker | Get docker host info
+#  community.docker.docker_host_info:
+#  register: result
+#
+#- name: "Debug output"
+#  debug:
+#    var: result.host_info
+
+# Create hello-world container
+- name: Docker | Run hello-world
+  community.docker.docker_container:
+    # Example using remote Docker daemon with unverified TLS
+    name: hello-world
+    image: docker/getting-started:latest
+    ports:
+      - "8080:80"
+
+# Create portainer container
+- name: Docker | Run portainer
+  community.docker.docker_container:
+    # Example using remote Docker daemon with unverified TLS
+    name: portainer
+    image: portainer/portainer-ce
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

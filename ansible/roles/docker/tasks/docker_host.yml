@@ -1,0 +1,15 @@
+# tasks file for docker host system
+---
+# Install Docker SDK by from PIP
+- name: Install Docker and Compose SDKs for Python
+  pip:
+    name:
+      - docker
+      - docker-compose
+    state: present
+
+- name: Upgrade Docker SDK library for Python
+  pip:
+    name:
+      - docker
+    extra_args: --upgrade

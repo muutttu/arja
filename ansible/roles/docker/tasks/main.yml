@@ -1,0 +1,12 @@
+# contains the main list of tasks to be executed by the role.
+---
+## main tasks for docker host
+
+# Install core services for Docker host
+- name: Prepare Docker host
+  include_tasks: docker_host.yml
+
+# Simple hello_world to remote host
+# --
+- name: Run hello-world
+  include_tasks: hello_world.yml
