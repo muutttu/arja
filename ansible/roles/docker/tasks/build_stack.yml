@@ -5,7 +5,7 @@
   community.docker.docker_compose:
     project_name: arja
     project_src: ./roles/docker/files/compose
-    docker_host: "tcp://192.168.8.12:2375"
+    docker_host: "tcp://{{ docker_host_ip }}:2375"
     files:
       - docker-compose.yml
     state: present # Specifying present is the same as running docker-compose up
