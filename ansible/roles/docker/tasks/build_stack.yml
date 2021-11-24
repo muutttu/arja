@@ -1,0 +1,11 @@
+---
+# Install service arja-stack with docker-compose
+#
+- name: Docker-compose | Build images and run containers for ARJA-stack (takes time...)
+  community.docker.docker_compose:
+    project_name: arja
+    project_src: ./roles/docker/files/compose
+    docker_host: "tcp://192.168.8.12:2375"
+    files:
+      - docker-compose.yml
+    state: present # Specifying present is the same as running docker-compose up

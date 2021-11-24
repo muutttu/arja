@@ -8,5 +8,9 @@
 
 # Simple hello_world to remote host
 # --
-- name: Run hello-world
-  include_tasks: hello_world.yml
+#- name: Run hello-world
+#  include_tasks: hello_world.yml
+
+# Run docker-compose for arja container stack:
+- name: Run Docker-compose
+  include_tasks: build_stack.yml
