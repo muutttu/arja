@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  test:
+    container_name: hello-world-app
+    image: docker/getting-started:latest
+    ports:
+      - "8088:80"

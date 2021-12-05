@@ -1,0 +1,37 @@
+## Tämä sisältää testitaskeja docker-compose:lle
+---
+# Install test service stack with docker-compose
+#
+- name: Compose-test | Copy file with owner and permissions
+  copy:
+    src: ./roles/docker/files/compose_test
+    dest: "{{ docker_host_home_folder }}" # Tämä tulee vars/main.yml:stä
+    #owner: foo
+    #group: foo
+    mode: 0644
+
+# docker_host komentoa varten tarvitaan kohdekoneessa avata Docker:n asetuksissa portti 2375
+# https://docs.docker.com/config/daemon/#troubleshoot-conflicts-between-the-daemonjson-and-startup-scripts
+# 1. Create daemon.json file in /etc/docker:
+#   {"hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]}
+# 2. Add /etc/systemd/system/docker.service.d/override.conf
+#   [Service]
+#    ExecStart=
+#    ExecStart=/usr/bin/dockerd
+# 3. Reload the systemd daemon:
+#   systemctl daemon-reload
+# 4. Restart docker:
+#   sudo service docker restart
+#
+# Myös: https://docs.docker.com/engine/security/protect-access/
+
+- name: Compose-test | Build images and run containers for test-stack
+  community.docker.docker_compose:
+    project_name: test_stack
+    docker_host: tcp://{{ docker_host_ip }}:2375
+    project_src: /home/muutt/compose_test
+  register: output
+
+- name: Compose-test | Print return information from the previous task
+  ansible.builtin.debug:
+    var: output

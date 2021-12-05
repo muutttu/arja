@@ -2,6 +2,10 @@
 - name: Packages | Install core system-packages
   apt:
     pkg:
+    - apt-transport-https
+    - ca-certificates
+    - gnupg-agent
+    - software-properties-common
     - vim
     - curl
     - git

@@ -63,7 +63,7 @@ Playbook 'docker.yml' tekee kohdekoneesta Docker-hostin ja asentaa sille paketit
  - Portainer, jolla voi hallinnoida Docker-ympäristöä
 
 ### Yhteydet
- - Ejabberd:iin liitytään xmpp-clientillä, esim Xabber (Android), ChatSecure (iOS) tai Pidgin (Win/Ununtu)
+ - Ejabberd:iin liitytään xmpp-clientillä, esim Xabber (Android), ChatSecure (iOS) tai Pidgin (Win/Ubuntu)
  - Nginx:n yhteystesti osoitteessa http(s)://[kohde-ip]/health-check
  - Flask-sovellus osoitteessa http(s)://[kohde-ip]/flask
  - Portainer osoitteessa http://[kohde-ip]:9000 (ensikirjautumissa asetetaan admin-tunnus ja salasana)
