@@ -10,6 +10,7 @@
     #group: foo
     mode: 0644
 
+# Vaihtoehto 1: Avataan TCP-portti (EI turvallinen)
 # docker_host komentoa varten tarvitaan kohdekoneessa avata Docker:n asetuksissa portti 2375
 # https://docs.docker.com/config/daemon/#troubleshoot-conflicts-between-the-daemonjson-and-startup-scripts
 # 1. Create daemon.json file in /etc/docker:
@@ -23,12 +24,23 @@
 # 4. Restart docker:
 #   sudo service docker restart
 #
-# Myös: https://docs.docker.com/engine/security/protect-access/
+# Huomioi: https://docs.docker.com/engine/security/protect-access/
+#
+# Vaihtoehto 2: Vaihdetaan docker-context host:lla
+# docker context create \
+#    --docker host=ssh://tunnus@127.0.0.1 \
+#    --description="Remote engine" \
+#    docker-remote-engine
+# Jonka jälkeen:
+# $ ssh-agent $BASH !! Mikäli virhe "Could not open a connection to your authentication agent."
+# $ ssh-add ~/.ssh/rsa_tiedosto
+# $ sudo service ssh restart
+# Tämän jälkeen "docker info" pitäisi antaa kohdekoneen tiedot --> docker socket = localhost
 
 - name: Compose-test | Build images and run containers for test-stack
   community.docker.docker_compose:
     project_name: test_stack
-    docker_host: tcp://{{ docker_host_ip }}:2375
+    #docker_host: tcp://{{ docker_host_ip }}:2375
     project_src: /home/muutt/compose_test
   register: output
 

@@ -13,9 +13,9 @@
 
 # Simple hello_compose to remote host
 # --
-- name: Run hello-world docker-compose test
-  include_tasks: hello_compose.yml
+#- name: Run hello-world docker-compose test
+#  include_tasks: hello_compose.yml
 
 # Run docker-compose for arja container stack:
-#- name: Run Docker-compose
-#  include_tasks: build_stack.yml
+- name: Run Docker-compose
+  include_tasks: build_stack.yml

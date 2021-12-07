@@ -114,7 +114,7 @@ services:
       - "8000:8000"
       - "9000:9000"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock" # Access to host system Docker-socket
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" # Read-only access to host system Docker-socket
       - "portainer_data:/data"
 
 # Persistent data to be configured in volumes from Docker host system /var/lib/docker/volumes

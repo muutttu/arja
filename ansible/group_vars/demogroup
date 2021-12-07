@@ -1,5 +1,5 @@
 ---
-# s7home-group specific variables
+# demo-group specific variables
 ansible_user: "käyttäjätunnus" # Tähän laitetaan kohdekoneen SSH käyttäjätunnus
 ansible_sudo_pass: "tosisalainensalasana" # Tähän laitetaan kohdekoneen SSH salasana
 # ansible_ssh_private_key_file: "~/.ssh/id_rsa" # Tähän laitetaan tiedostopolku SSH-certiin, jos sellainen on käytössä.

@@ -2,7 +2,8 @@
 ## Prepare the Ubuntu servers
 - name: Setup Docker and services
   hosts:
-    - s7home
+    - demogroup
+    #- ubuntu
   become: true  # All shell commands as 'root'
   tasks:
     - import_role:
