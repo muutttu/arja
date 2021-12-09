@@ -22,8 +22,10 @@
     state: present # Specifying present is the same as running docker-compose up
 
 # Aja certbot-kontti komennolla, joka tuottaa SSL-certit
-- name: Docker-compose | Restart Certbot container to get certs
-  community.docker.docker_container:
-    name: certbot
+#- name: Docker-compose | Restart Certbot container to get certs
+#  community.docker.docker_container:
+#    name: certbot
     #image: ubuntu:14.04
-    command: ["sleep", "infinity"] # TODO: Tähän certbot-komento
+#    command: ["sleep", "infinity"] # TODO: Tähän certbot-komento
+
+#docker-compose run --rm certbot certonly --webroot -w /var/www/certbot/ --agree-tos -d ar2.dy.fi -d www.ar2.dy.fi -d chat.ar2.dy.fi -d pubsub.chat.ar2.dy.fi -d conference.chat.ar2.dy.fi -d upload.chat.ar2.dy.fi -d proxy.chat.ar2.dy.fi -m webmaster@ar2.dy.fi

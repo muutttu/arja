@@ -2,8 +2,8 @@
 ## Update APT, cache, install prerequisites etc, as root/sudo
 - name: Set Ubuntu 20.04 server base configuration
   hosts:
-    - demogroup
-    #- ubuntu
+    #- demogroup
+    - ubuntu
   become: true  # All shell commands as 'root'
   tasks:
     - import_role:
