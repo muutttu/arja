@@ -36,7 +36,7 @@ server {
 #
 #    ssl_certificate /etc/nginx/ssl/live/${DOMAIN}/fullchain.pem;
 #    ssl_certificate_key /etc/nginx/ssl/live/${DOMAIN}/privkey.pem;
-#    ssl_dhparam /etc/nginx/ssl/live/${DOMAIN}/dh2048.pem;
+#    ssl_dhparam /etc/nginx/ssl/live/${DOMAIN}/dhparams.pem;
 #
 #    location / {
 #        root /usr/share/nginx/html;

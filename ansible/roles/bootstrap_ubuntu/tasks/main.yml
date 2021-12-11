@@ -12,3 +12,6 @@
 
 - name: Check if a reboot is needed on all servers
   include_tasks: reboot.yml
+
+- name: Create system specific parameters
+  include_tasks: sysparams.yml

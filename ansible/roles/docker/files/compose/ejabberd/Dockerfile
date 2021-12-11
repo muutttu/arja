@@ -30,11 +30,14 @@ FROM rroemhild/ejabberd:latest
 LABEL version="0.0.1-beta"
 LABEL author="muutttu"
 
+# Ejabberd config files to the container
 ADD ./templates/ejabberd.yml.tpl /opt/ejabberd/conf/ejabberd.yml.tpl
 #ADD ./templates/ejabberdctl.cfg.tpl /opt/ejabberd/conf/ejabberdctl.cfg.tpl
+
+# Ejabberd parameter files to the container
 #ADD ./templates/example.com.pem /opt/ejabberd/ssl/example.com.pem
 
-# Create log files
+# Create Ejabberd log files
 RUN touch /usr/local/var/log/ejabberd/crash.log
 RUN touch /usr/local/var/log/ejabberd/error.log
 RUN touch /usr/local/var/log/ejabberd/erlang.log

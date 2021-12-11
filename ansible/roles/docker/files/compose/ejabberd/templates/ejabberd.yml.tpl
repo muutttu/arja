@@ -44,7 +44,7 @@ define_macro:
 c2s_ciphers: "{{ env.get('EJABBERD_CIPHERS', 'HIGH:!aNULL:!3DES') }}"
 c2s_protocol_options: 'TLS_OPTIONS'
 {%- if env.get('EJABBERD_DHPARAM', false) == "true" %}
-c2s_dhfile: "/opt/ejabberd/ssl/dh2048.pem"
+c2s_dhfile: "/opt/ejabberd/ssl/dhparams.pem"
 {%- endif %}
 
 ###   CERTIFICATES
