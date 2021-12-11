@@ -1,0 +1,26 @@
+# Finalize the configuration of the docker service stack
+---
+# Copy the Diffie-Hellman security parameters to Certbot's cert volume folder
+- name: Configure | Copy DH-parameters for Nginx
+  copy:
+    src: /etc/ssl/dhparams.pem
+    dest: "/var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/dhparams.pem"
+    remote_src: yes
+
+# Copy the Diffie-Hellman security parameters to Ejabberd data volume folder
+- name: Configure | Copy DH-parameters for Ejabberd
+  copy:
+    src: /etc/ssl/dhparams.pem
+    dest: /var/lib/docker/volumes/arja_ejabberd_data/_data/dhparams.pem
+    remote_src: yes
+
+# Aja certbot-kontti komennolla, joka tuottaa SSL-certit
+#- name: Docker-compose | Restart Certbot container to get certs
+#  community.docker.docker_container:
+#    name: certbot
+    #image: ubuntu:14.04
+#    command: ["sleep", "infinity"] # TODO: Tähän certbot-komento
+
+# Create host SSL parameter file
+- name: Configure | Create Ejabberd SSL pem file
+  ansible.builtin.shell: sudo cat /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/fullchain.pem /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/privkey.pem > /var/lib/docker/volumes/arja_ejabberd_data/_data/chat.{{ docker_host_domain_name }}.pem

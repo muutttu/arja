@@ -19,3 +19,7 @@
 # Run docker-compose for arja container stack:
 - name: Run Docker-compose
   include_tasks: build_stack.yml
+
+# Finalize Docker services' configuration:
+- name: Finalize Docker configuration
+  include_tasks: configure.yml
