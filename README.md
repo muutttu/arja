@@ -2,7 +2,7 @@
 ## Yleistä
 Projekti sisältää kokoelman Ansible-skriptejä, joka alustaa kohdepalvelimen sekä asentaa sille määritetyn Docker-palvelukonttipinon. Kontit voidaan ottaa käyttöön myös ilman Ansiblea hyödyntäen docker-compose:a.
 
-### Mikä on Ansible
+### Mikä on Ansible ?
 Ansible on IT-järjestelmien ja -palveluiden automatisointityökalu, joka vähentää manuaalista käsityötä järjestelmän käyttöönotto- ja käyttövaiheissa. 
 
 [Wikipedia](https://fi.wikipedia.org/wiki/Ansiibeli): Sana Ansiibeli (engl. ansible) on hypoteettinen laite, jonka avulla voi viestiä valon nopeutta suuremmalla nopeudella. 
@@ -13,7 +13,7 @@ Projektin käyttöönotto ja palveluiden asentaminen sisältää kolme päävaih
  2. Kohdetietokoneen/-koneiden alustaminen. Tarkoittaa tietokonetta/palvelinta, jolle järjestelmäpalvelut otetaan käyttöön. Kohdekone on oltava IP-verkon kautta saatavissa Ansible-host:lle.
  3. Ansible-projektin teknisten parametrien määrittäminen ennen playbookien ajoa.
 
-### 1 Ansible-host:n alustaminen
+### 1. Ansible-host:n alustaminen
 Alusta tietokone, jolta ajat Ansiblea. Esim MAC, Ubuntu Desktop tai Win10. Ansible-komennot ajatutuvat linux:lla, joten Windowsille tarvitaan esim WSL:ssä ajettava Ubuntu. Ansible:n ajantasaisin versio (23.11.2021: ansible-core 2.11.6) löytyy Python pakettikirjaston (PyPI) kautta ja asennettavissa PIP:llä. APT-pakettimanagerin kautta löytyy vanhempi versio (23.11.2021: ansible-core 2.9.6).
 
 #### 1.a) Tietokoneen peruspalvelut ja -ohjelmakirjastot
@@ -31,7 +31,7 @@ $ ansible-galaxy collection install community.crypto
 $ sudo apt -y install sshpass
 ```
 
-Ansible-host asentaa kohdekoneelle docker-palvelukontit ja tämä hallintayhteys hyödyntää [Docker context:ia](https://docs.docker.com/engine/context/working-with-contexts/). Näin ollen Ansible-host:lle tarvitaan asentaa myös Docker, vaikka varsinaisia palvelukontteja ei Ansible-host:lle asennettaisikaan. Docker on asennettavissa eri käyttöjärjestelmille ja ohjeistusta tästä ohjeesta: https://docs.docker.com/get-docker/
+Ansible-host asentaa kohdekoneelle docker-palvelukontit ja tämä hallintayhteys hyödyntää [Docker context:ia](https://docs.docker.com/engine/context/working-with-contexts/). Näin ollen Ansible-host:lle tarvitaan asentaa myös Docker, vaikka varsinaisia palvelukontteja ei Ansible-host:lle asennettaisikaan. Docker on asennettavissa eri käyttöjärjestelmille ja ohjeistusta tästä [ohjeesta](https://docs.docker.com/get-docker/)
 
 #### 1.b) Etäyhteys VSCodeen
 [RMATE-kirjasto](https://pypi.org/project/rmate/) helpottaa elämää, kun Visual Studio Code -editorilla voi ottaa SSH-etäyhteyden Ansible-hostiin (mikäli Ansiblea ajetaan etäyhteden kautta):
