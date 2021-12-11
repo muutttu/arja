@@ -1,4 +1,17 @@
 ---
+# Upgrade packages
+- name: Packages | APT Upgrade and update cache
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400 # 1 day
+
+# Dist-upgrade
+- name: Packages | APT Dist-upgrade
+  apt:
+    upgrade: dist
+
+# Install new required packages
 - name: Packages | Install core system-packages
   apt:
     pkg:
@@ -10,3 +23,6 @@
     - curl
     - git
     - ufw
+    - python3-pip
+    - python3-venv
+    - python-is-python3
