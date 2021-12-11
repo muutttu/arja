@@ -74,6 +74,7 @@ services:
     volumes:
       - "certbot_conf:/etc/letsencrypt/:rw"
       - "certbot_data:/var/www/certbot/:rw"
+      - "certbot_acme:/var/lib/letsencrypt:rw"
     command: certonly --webroot -w /var/www/certbot/ --agree-tos --email ${DEFAULT_EMAIL} -d ${DEFAULT_DOMAIN} --dry-run
 
   ejabberd:
@@ -99,6 +100,7 @@ services:
     environment:
       DEFAULT_DOMAIN: ${DEFAULT_DOMAIN}
       XMPP_DOMAIN: ${DEFAULT_CHAT_DOMAIN}
+      CIPHERS: ${EJABBERD_CIPHERS}
       EJABBERD_ADMINS: ${DEFAULT_CHAT_ADMIN}
       EJABBERD_USERS: ${DEFAULT_CHAT_USERS}
 
@@ -125,6 +127,7 @@ volumes: # Named volumes inside /var/lib/docker/volume local docker host directo
   nginx_conf:
   certbot_data:
   certbot_conf:
+  certbot_acme:
   ejabberd_data:
   portainer_data:
 

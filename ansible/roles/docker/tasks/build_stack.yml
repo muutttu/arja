@@ -3,7 +3,7 @@
 #
 # Install test service stack with docker-compose
 #
-- name: Docker-compose | Copy docker-compose folder+files with owner and permissions
+- name: Docker-compose | Copy docker-compose folder and files
   copy:
     src: ./roles/docker/files/compose
     dest: "{{ docker_host_home_folder }}" # Tämä tulee vars/main.yml:stä
@@ -11,10 +11,9 @@
     #group: foo
     mode: 0644
 
-- name: Docker-compose | Build images and run containers for ARJA-stack (takes time...)
+- name: Docker-compose | Build images and run containers for ARJA-stack (takes a long time...)
   community.docker.docker_compose:
     project_name: arja
-    #project_src: ./roles/docker/files/compose
     project_src: "{{ docker_host_home_folder }}/compose"
     #docker_host: "tcp://{{ docker_host_ip }}:2375" # Local socket, kun docker context
     files:

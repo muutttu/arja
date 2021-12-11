@@ -33,25 +33,18 @@ define_macro:
   'TLS_OPTIONS':
     - "no_sslv2"
     - "no_sslv3"
-    {%- if env.get('EJABBERD_PROTOCOL_OPTIONS_TLSV1', "false") == "false" %}
     - "no_tlsv1"
-    {%- endif %}
-    {%- if env.get('EJABBERD_PROTOCOL_OPTIONS_TLSV1_1', "true") == "false" %}
     - "no_tlsv1_1"
-    {%- endif %}
     - "cipher_server_preference"
 
-c2s_ciphers: "{{ env.get('EJABBERD_CIPHERS', 'HIGH:!aNULL:!3DES') }}"
+c2s_ciphers: "{{ env.get('CIPHERS', 'HIGH:!aNULL:!3DES') }}"
 c2s_protocol_options: 'TLS_OPTIONS'
-{%- if env.get('EJABBERD_DHPARAM', false) == "true" %}
 c2s_dhfile: "/opt/ejabberd/ssl/dhparams.pem"
-{%- endif %}
 
 ###   CERTIFICATES
 ###   ================
 certfiles:
-  - "/opt/ejabberd/ssl/{{ xmpp_domain }}.pem"
-
+  - "/opt/ejabberd/ssl/{{ env['XMPP_DOMAIN'] }}.pem"
 
 ###   =======
 ###   MODULES

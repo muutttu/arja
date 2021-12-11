@@ -1,4 +1,4 @@
 ---
-- name: SysParams | Generate Diffie-Hellman crypto params
+- name: SysParams | Generate Diffie-Hellman crypto params (takes a long time...)
   community.crypto.openssl_dhparam:
     path: /etc/ssl/dhparams.pem

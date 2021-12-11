@@ -1,5 +1,17 @@
 # Finalize the configuration of the docker service stack
 ---
+# Aja certbot-kontti komennolla, joka tuottaa SSL-certit !! TODO: tarkasta, miten ajetaan ilman portaineria !!
+- name: Configure | Create temporary Certbot container to get certs
+  community.docker.docker_container:
+    name: certbot2
+    image: arja_certbot
+    #interactive: yes # Keep stdin open after a container is launched
+    #cleanup: yes # remove the container after successful execution
+    volumes:
+      - arja_certbot_conf:/etc/letsencrypt/:rw
+      - arja_certbot_data:/var/www/certbot/:rw
+    command: certonly --webroot -w /var/www/certbot/ --non-interactive --agree-tos -d {{ docker_host_domain_name }} -d www.{{ docker_host_domain_name }} -d chat.{{ docker_host_domain_name }} -d pubsub.chat.{{ docker_host_domain_name }} -d conference.chat.{{ docker_host_domain_name }} -d upload.chat.{{ docker_host_domain_name }} -d proxy.chat.{{ docker_host_domain_name }} -m webmaster@{{ docker_host_domain_name }}
+
 # Copy the Diffie-Hellman security parameters to Certbot's cert volume folder
 - name: Configure | Copy DH-parameters for Nginx
   copy:
@@ -14,13 +26,13 @@
     dest: /var/lib/docker/volumes/arja_ejabberd_data/_data/dhparams.pem
     remote_src: yes
 
-# Aja certbot-kontti komennolla, joka tuottaa SSL-certit
-#- name: Docker-compose | Restart Certbot container to get certs
-#  community.docker.docker_container:
-#    name: certbot
-    #image: ubuntu:14.04
-#    command: ["sleep", "infinity"] # TODO: Tähän certbot-komento
-
 # Create host SSL parameter file
 - name: Configure | Create Ejabberd SSL pem file
   ansible.builtin.shell: sudo cat /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/fullchain.pem /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/privkey.pem > /var/lib/docker/volumes/arja_ejabberd_data/_data/chat.{{ docker_host_domain_name }}.pem
+
+# Restart Ejabberd with new config
+- name: Configure | Restart Ejabberd container
+  community.docker.docker_container:
+    name: ejabberd
+    state: started
+    restart: yes

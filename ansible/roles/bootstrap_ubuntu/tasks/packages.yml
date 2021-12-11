@@ -19,10 +19,18 @@
     - ca-certificates
     - gnupg-agent
     - software-properties-common
-    - vim
+    - lsb-release
+    - nano
     - curl
     - git
     - ufw
     - python3-pip
     - python3-venv
     - python-is-python3
+
+- name: Packages | Upgrade PIP-wheel
+  pip: 
+    name:
+      - pip
+      - wheel
+    extra_args: --upgrade

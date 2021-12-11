@@ -1,14 +1,43 @@
 # tasks file for docker host system
 ---
+# Remove pre-installed Docker system services
+- name: Docker-host | Remove pre-installed packages
+  apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+
+# Add Docker GPG Key
+- name: Docker-host | Add Docker GPG APT key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+# Add Docker Ubuntu 20 (Focal) repo
+- name: Docker-host | Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+# Install Docker-CE
+- name: Docker-host | Install Docker Community Edition
+  apt:
+    name: docker-ce
+    state: latest
+
 # Install Docker SDK by from PIP
-- name: Host | Install Docker and Compose SDKs for Python
+- name: Docker-host | Install Docker and Compose SDKs for Python
   pip:
     name:
       - docker
       - docker-compose
     state: present
 
-- name: Host | Upgrade Docker SDK library for Python
+- name: Docker-host | Upgrade Docker SDK library for Python
   pip:
     name:
       - docker
