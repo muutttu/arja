@@ -49,3 +49,17 @@
     name: ejabberd
     state: started
     restart: yes
+
+# Update Nginx config file for SSL
+- name: Configure | Reconfigure Nginx
+  ansible.builtin.copy:
+    src: ./roles/docker/templates/nginx_default.conf.template
+    dest: /var/lib/docker/volumes/arja_nginx_conf/_data/default.conf.template
+    mode: 0644
+
+# Restart Nginx container
+- name: Configure | Restart Nginx
+  community.docker.docker_container:
+    name: nginx
+    state: started
+    restart: yes

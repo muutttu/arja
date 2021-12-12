@@ -22,6 +22,21 @@ server {
         root /var/www/certbot;
     }
 
+   location / {
+        # The $host variable holds the domain name of the request.
+       return 301 https://$host$request_uri;
+   }
+}
+
+server {
+    listen 443 default_server ssl http2;
+
+    server_name ${DOMAIN} ${WWW_DOMAIN} ${CHAT_DOMAIN} conference.${CHAT_DOMAIN} upload.${CHAT_DOMAIN} proxy.${CHAT_DOMAIN} pubsub.${CHAT_DOMAIN};
+
+    ssl_certificate /etc/nginx/ssl/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/${DOMAIN}/privkey.pem;
+    ssl_dhparam /etc/nginx/ssl/live/${DOMAIN}/dhparams.pem;
+
     location / {
         root /usr/share/nginx/html;
         try_files $uri $uri/ =404;
