@@ -45,9 +45,9 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     environment:
-      DOMAIN: ${DEFAULT_DOMAIN}
-      WWW_DOMAIN: ${DEFAULT_WWW_DOMAIN}
-      CHAT_DOMAIN: ${DEFAULT_CHAT_DOMAIN}
+      DOMAIN: "{{ docker_host_domain_name }}"
+      WWW_DOMAIN: "www.{{ docker_host_domain_name }}"
+      CHAT_DOMAIN: "chat.{{ docker_host_domain_name }}"
     networks:
       - frontend
     restart: always
@@ -62,20 +62,18 @@ services:
       - "certbot_data:/var/www/certbot/:ro"
 
   certbot:
-    container_name: certbot
+    container_name: certbot-test
     depends_on:
       - nginx
     build:
       context: ./certbot
       dockerfile: Dockerfile
-    networks:
-      - frontend
     restart: "no"
     volumes:
       - "certbot_conf:/etc/letsencrypt/:rw"
       - "certbot_data:/var/www/certbot/:rw"
       - "certbot_acme:/var/lib/letsencrypt:rw"
-    command: certonly --webroot -w /var/www/certbot/ --agree-tos --email ${DEFAULT_EMAIL} -d ${DEFAULT_DOMAIN} --dry-run
+    command: "certonly --webroot -w /var/www/certbot/ --agree-tos --email {{ certbot_email }} -d {{ docker_host_domain_name }} --dry-run"
 
   ejabberd:
     container_name: ejabberd
@@ -98,11 +96,11 @@ services:
       - "5280:5280" # HTTP GUI
       - "5443:5443" # HTTPS GUI
     environment:
-      DEFAULT_DOMAIN: ${DEFAULT_DOMAIN}
-      XMPP_DOMAIN: ${DEFAULT_CHAT_DOMAIN}
+      DEFAULT_DOMAIN: "{{ docker_host_domain_name }}"
+      XMPP_DOMAIN: "chat.{{ docker_host_domain_name }}"
       CIPHERS: ${EJABBERD_CIPHERS}
-      EJABBERD_ADMINS: ${DEFAULT_CHAT_ADMIN}
-      EJABBERD_USERS: ${DEFAULT_CHAT_USERS}
+      EJABBERD_ADMINS: "admin@chat.{{ docker_host_domain_name }}"
+      EJABBERD_USERS: "admin@chat.{{ docker_host_domain_name }}:passw0rd user1@chat.{{ docker_host_domain_name }}:user123"
 
   portainer:
     container_name: portainer

@@ -1,16 +1,29 @@
 # Finalize the configuration of the docker service stack
 ---
-# Aja certbot-kontti komennolla, joka tuottaa SSL-certit !! TODO: tarkasta, miten ajetaan ilman portaineria !!
+# Wait until Certbot finished executing
+- name: Configure | Wait until Certbot lock file is removed
+  wait_for:
+    path: /var/lib/docker/volumes/arja_certbot_conf/_data/.certbot.lock
+    state: absent
+
+# Run new Certbot container to get SSL certs
 - name: Configure | Create temporary Certbot container to get certs
   community.docker.docker_container:
-    name: certbot2
+    name: certbot-final
     image: arja_certbot
     #interactive: yes # Keep stdin open after a container is launched
     #cleanup: yes # remove the container after successful execution
     volumes:
       - arja_certbot_conf:/etc/letsencrypt/:rw
       - arja_certbot_data:/var/www/certbot/:rw
-    command: certonly --webroot -w /var/www/certbot/ --non-interactive --agree-tos -d {{ docker_host_domain_name }} -d www.{{ docker_host_domain_name }} -d chat.{{ docker_host_domain_name }} -d pubsub.chat.{{ docker_host_domain_name }} -d conference.chat.{{ docker_host_domain_name }} -d upload.chat.{{ docker_host_domain_name }} -d proxy.chat.{{ docker_host_domain_name }} -m webmaster@{{ docker_host_domain_name }}
+      - arja_certbot_acme:/var/lib/letsencrypt/:rw
+    command: "certonly --webroot -w /var/www/certbot/ --non-interactive --agree-tos -d {{ docker_host_domain_name }} -d www.{{ docker_host_domain_name }} -d chat.{{ docker_host_domain_name }} -d pubsub.chat.{{ docker_host_domain_name }} -d conference.chat.{{ docker_host_domain_name }} -d upload.chat.{{ docker_host_domain_name }} -d proxy.chat.{{ docker_host_domain_name }} -m {{ certbot_email }}"
+
+# Wait until Certbot finished executing
+- name: Configure | Wait until Certbot lock file is removed
+  wait_for:
+    path: /var/lib/docker/volumes/arja_certbot_conf/_data/.certbot.lock
+    state: absent
 
 # Copy the Diffie-Hellman security parameters to Certbot's cert volume folder
 - name: Configure | Copy DH-parameters for Nginx
@@ -28,7 +41,7 @@
 
 # Create host SSL parameter file
 - name: Configure | Create Ejabberd SSL pem file
-  ansible.builtin.shell: sudo cat /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/fullchain.pem /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/privkey.pem > /var/lib/docker/volumes/arja_ejabberd_data/_data/chat.{{ docker_host_domain_name }}.pem
+  shell: "sudo cat /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/fullchain.pem /var/lib/docker/volumes/arja_certbot_conf/_data/live/{{ docker_host_domain_name }}/privkey.pem > /var/lib/docker/volumes/arja_ejabberd_data/_data/chat.{{ docker_host_domain_name }}.pem"
 
 # Restart Ejabberd with new config
 - name: Configure | Restart Ejabberd container

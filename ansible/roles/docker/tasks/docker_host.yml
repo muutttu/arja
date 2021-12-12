@@ -29,7 +29,7 @@
     name: docker-ce
     state: latest
 
-# Install Docker SDK by from PIP
+# Install Docker python SDK from PIP
 - name: Docker-host | Install Docker and Compose SDKs for Python
   pip:
     name:
@@ -37,6 +37,7 @@
       - docker-compose
     state: present
 
+# Upgrade Docker python SDK just in case
 - name: Docker-host | Upgrade Docker SDK library for Python
   pip:
     name:

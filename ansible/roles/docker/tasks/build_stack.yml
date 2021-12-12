@@ -11,6 +11,14 @@
     #group: foo
     mode: 0644
 
+# Copy docker-compose.yml template
+- name: Docker-compose | Copy docker-compose.yml template
+  template:
+    src: ./roles/docker/templates/docker-compose.yml.j2
+    dest: "{{ docker_host_home_folder }}/compose/docker-compose.yml"
+    mode: 0644
+
+# Run docker-compose up --build
 - name: Docker-compose | Build images and run containers for ARJA-stack (takes a long time...)
   community.docker.docker_compose:
     project_name: arja
