@@ -1,0 +1,12 @@
+---
+# Update hosts file for new hostname
+- name: System update | Replace localhost entry in /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    search_string: "127.0.0.1"
+    line: "127.0.0.1 localhost {{ inventory_hostname }}"
+    mode: 0644
+
+- name: System update | Set CLI hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"

@@ -4,6 +4,9 @@
 
 # Host system preparation and update process:
 # --
+- name: Configure system files
+  include_tasks: system.yml
+
 - name: Install aptitude and update APT cache
   include_tasks: apt.yml
 
