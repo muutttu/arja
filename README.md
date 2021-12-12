@@ -69,7 +69,25 @@ Kohdekoneelle tarvitaan molempisuuntainen laajakaistainen Internet-yhteys, eli s
 On suositeltavaa, että kohdekoneen julkista IP-osoitetta varten tehdään verkkonimi julkisessa nimipalvelussa. Myös dynaaminen DNS käy, kuten [dy.fi](https://www.dy.fi/).
 
 ### 3. Ansible-projektin teknisten parametrien määrittäminen ennen playbookien ajoa.
-Siirry kansioon arja/ansible ja avaa README.md tiedosto.
+Siirry kansioon arja/ansible ja avaa hosts.yml tiedosto. Ko tiedostoon asetetaan kaikki alustettavat kohdekoneet ja perusparametrit. Tiedostoon on kirjattu valmiiksi 2 laiteryhmää "ubuntu" ja "demogroup". Poista "ubuntu"-ryhmän rivien kommentit (#-merkit), jotta kohdasta tulee seuraavanlainen:
+```
+    ubuntu: # Tämä on laiteryhmän esimerkki
+      hosts:
+        palvelin-001: # Tämä on esimerkki laitteen nimestä
+          ansible_host: 127.0.0.1 # !! Kohdekoneen IP-osoite tai verkkonimi tähän !!
+          # Kohdekoneen tarvitsemat verkkoparametrit tähän alle:
+          #ansible_ssh_private_key_file: ""
+          #ansible_ssh_pass: "huippusalainensalasana"
+          #ansible_sudo_pass: "toinensalainensalasana"
+          docker_host_domain_name: jokunimi.esimerkki.net
+          certbot_email: osoite@esimerkki.net
+```
+- parametri "palvelin-001" tarkoittaa kohdekoneelle annettavaa nimialiasta, joka voi olla mitä vaan.
+- Jos kohdepalvelimelle otetaan SSH-yhteys sertifikaatin avulla, konfiguroi muuttuja "ansible_ssh_private_key_file", ja mikäli SSH-salasanalla niin sitten korjaa muuttujat "ansible_ssh_pass" ja "ansible_sudo_pass". Yleensä nämä ovat samat. On suositeltavaa, että kohdekoneen kirjautumistietoja ei tallenneta selkokielellä vaan ne tallennetaan [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html):iin.
+- muuttuja "docker_host_domain_name" kohdekonetta varten tehty julkinen verkko-osoite. Mielellään edellä mainittu julkinen verkkonimi.
+- muuttuja "certbot_email" tarkoittaa ylläpitäjän sähköpostiosoitetta, johon läheteään Certbot:n tiedotteita mm SSL-sertifikaattien päivitystarpeesta.
+
+Ansible-skriptien toiminnasta tarkemmin tiedostossa arja/ansible/README.md
 
 ## Käyttö
 Projektin ansible-playbook:t ovat kansiossa ansible, jossa koko projekti play:t ajetaan kommennolla:
