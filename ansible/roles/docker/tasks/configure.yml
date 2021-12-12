@@ -13,8 +13,6 @@
     image: arja_certbot
     #interactive: yes # Keep stdin open after a container is launched
     #cleanup: yes # remove the container after successful execution
-    networks:
-      - arja_default
     volumes:
       - arja_certbot_conf:/etc/letsencrypt/:rw
       - arja_certbot_data:/var/www/certbot/:rw

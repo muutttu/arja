@@ -113,7 +113,7 @@ services:
       - frontend
     restart: always
     expose:
-      - "9000:9000"
+      - "9000"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro" # Read-only access to host system Docker-socket
       - "portainer_data:/data"
