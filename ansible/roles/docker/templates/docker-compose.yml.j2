@@ -69,6 +69,8 @@ services:
       context: ./certbot
       dockerfile: Dockerfile
     restart: "no"
+    networks:
+      - default
     volumes:
       - "certbot_conf:/etc/letsencrypt/:rw"
       - "certbot_data:/var/www/certbot/:rw"
